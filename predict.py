@@ -20,7 +20,7 @@ from einops import rearrange, repeat
 from tqdm import tqdm
 from src.utils.train_util import instantiate_from_config
 from src.utils.camera_util import (FOV_to_intrinsics, get_zero123plus_input_cameras,get_circular_camera_poses,)
-from src.utils.mesh_util import save_obj, save_obj_with_mtl
+from src.utils.mesh_util import save_obj, save_obj_with_mtl, save_glb
 
 def preprocess(input_image, do_remove_background):
     rembg_session = rembg.new_session() if do_remove_background else None
@@ -88,9 +88,9 @@ def make_mesh(mesh_fpath, planes, model, infer_config, export_texmap):
         else:
             vertices, faces, vertex_colors = mesh_out
             vertices = vertices[:, [1, 2, 0]]
-            vertices[:, -1] *= -1
-            faces = faces[:, [2, 1, 0]]
-            save_obj(vertices, faces, vertex_colors, mesh_fpath)
+            # vertices[:, -1] *= -1
+            # faces = faces[:, [2, 1, 0]]
+            save_glb(vertices, faces, vertex_colors, mesh_fpath)
             print(f"Mesh saved to {mesh_fpath}")
     return mesh_fpath
 
