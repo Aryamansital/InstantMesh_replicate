@@ -1,0 +1,9 @@
+build:
+  gpu: true
+  python_version: "3.10"
+  run:
+    - pip install pytorch-lightning==2.1.2 einops omegaconf torchmetrics webdataset accelerate tensorboard \
+      PyMCubes trimesh rembg transformers diffusers==0.20.2 bitsandbytes imageio[ffmpeg] xatlas plyfile \
+      git+https://github.com/NVlabs/nvdiffrast ninja torchvision
+    - GIT_LFS_SKIP_SMUDGE=1 git clone -b main https://github.com/Aryamansital/InstantMesh /content/InstantMesh
+predict: "predict.py:Predictor"
